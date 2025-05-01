@@ -3,7 +3,7 @@ import {ImapOptions} from "@workingdevshero/deno-imap";
 import {downloadUnreadEmails} from "../../utils/emails.ts";
 
 Deno.test(async function downloadUnreadEmailsTest() {
-  const files = await Array.fromAsync(downloadUnreadEmails(testConnection));
+  const files = await Array.fromAsync(downloadUnreadEmails(testConnection, {decodeBase64: true}));
   console.log(files);
   assertEquals(files.length, 1);
 });

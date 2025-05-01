@@ -1,17 +1,18 @@
 import {
   fetchUnreadMessages,
+  markMessagesAsRead,
   ImapClient,
   type ImapMessage,
   type ImapOptions,
-  markMessagesAsRead
 } from "@workingdevshero/deno-imap";
+import {decodeBase64} from "@std/encoding";
 
 /**
  * download unread emails and mark them as read
  * @param imapConnection
- * @param filter
+ * @param options
  */
-export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?: EmailFilter): AsyncGenerator<EmailContent, void, unknown> {
+export async function* downloadUnreadEmails(imapConnection: ImapOptions, options?: EmailOptions): AsyncGenerator<EmailContent, void, unknown> {
   const client = new ImapClient(imapConnection);
   await client.connect();
   await client.authenticate();
@@ -27,13 +28,20 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?
     });
 
     let messagesToProcess = messages;
-    if (filter?.uid) {
-      messagesToProcess = messages.filter((it) => !filter.uid!.includes(it.uid!.toString()));
+    if (options?.uidFilter) {
+      messagesToProcess = messages.filter((it) => !options.uidFilter!.includes(it.uid!.toString()));
     }
 
     // pouze
     for (const message of messagesToProcess) {
-      const content= decoder.decode(message.parts!.TEXT.data);
+      let content= decoder.decode(message.parts!.TEXT.data)
+        .trim();
+
+      if (options?.decodeBase64) {
+        content = content.replace(/BODY\[\]\s+\{\d+\}$/i, '').trim();
+        content = decoder.decode(decodeBase64(content))
+      }
+
       yield {
         content,
         subject: message.envelope?.subject,
@@ -55,8 +63,9 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?
 
 
 
-export type EmailFilter = {
-  uid?: Array<string>
+export type EmailOptions = {
+  uidFilter?: Array<string>
+  decodeBase64?: boolean
 };
 
 
