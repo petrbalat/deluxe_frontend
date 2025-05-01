@@ -21,6 +21,7 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?
     const messages: ImapMessage[] = await fetchUnreadMessages(client, "INBOX", {
       uid: true,
       full: true,
+      envelope: true,
       internalDate: true,
       bodyParts: ["TEXT"],
     });
@@ -35,7 +36,7 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?
       const content= decoder.decode(message.parts!.TEXT.data);
       yield {
         content,
-        subject: message.envelope!.subject!,
+        subject: message.envelope?.subject,
         uid: message.uid!,
         date: message.internalDate,
       };
@@ -60,7 +61,7 @@ export type EmailFilter = {
 
 
 export type EmailContent = {
-  subject: string;
+  subject?: string;
   content: string;
   uid: number;
   date?: Date;

@@ -1,6 +1,6 @@
 {
   "name": "@softdeluxe/deluxe-frontend",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "exports": "./mod.ts",
   "tasks": {
     "check": "deno check mod.ts",
