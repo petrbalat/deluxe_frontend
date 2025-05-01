@@ -15,6 +15,7 @@ export async function* listFiles(directory: string, filter?: {
         nameWithoutExtension: substringBefore(it.name, ".") ?? it.name,
       },
     };
+    //bez filtru vrací a jdu na další soubor
     if (!filter) {
       yield entry;
       continue;
