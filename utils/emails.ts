@@ -5,7 +5,6 @@ import {
   type ImapMessage,
   type ImapOptions,
 } from "@workingdevshero/deno-imap";
-import {decodeBase64} from "@std/encoding";
 
 /**
  * download unread emails and mark them as read
@@ -34,12 +33,11 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, options
 
     // pouze
     for (const message of messagesToProcess) {
-      let content= decoder.decode(message.parts!.TEXT.data)
-        .trim();
+      let content= decoder.decode(message.parts!.TEXT.data).trim();
 
       if (options?.decodeBase64) {
         content = content.replace(/BODY\[\]\s+\{\d+\}$/i, '').trim();
-        content = decoder.decode(decodeBase64(content))
+        content = atob(content)
       }
 
       yield {
