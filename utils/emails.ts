@@ -1,4 +1,10 @@
-import {fetchUnreadMessages, ImapClient, markMessagesAsRead, type ImapOptions, type ImapMessage} from "@workingdevshero/deno-imap";
+import {
+  fetchUnreadMessages,
+  ImapClient,
+  type ImapMessage,
+  type ImapOptions,
+  markMessagesAsRead
+} from "@workingdevshero/deno-imap";
 
 /**
  * download unread emails and mark them as read
@@ -29,6 +35,7 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, filter?
       const content= decoder.decode(message.parts!.TEXT.data);
       yield {
         content,
+        subject: message.envelope!.subject!,
         uid: message.uid!,
         date: message.internalDate,
       };
@@ -53,6 +60,7 @@ export type EmailFilter = {
 
 
 export type EmailContent = {
+  subject: string;
   content: string;
   uid: number;
   date?: Date;
