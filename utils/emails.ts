@@ -37,7 +37,12 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, options
 
       if (options?.decodeBase64) {
         content = content.replace(/BODY\[\]\s+\{\d+\}$/i, '').trim();
-        content = atob(content)
+        try {
+          content = atob(content);
+        } catch (e) {
+          console.error(`atob error ${message.envelope?.subject} on date ${message.internalDate}`, e);
+          throw e;
+        }
       }
 
       yield {
