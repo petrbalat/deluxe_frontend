@@ -3,7 +3,8 @@
   "specifiers": {
     "jsr:@std/assert@^1.0.6": "1.0.11",
     "jsr:@std/internal@^1.0.5": "1.0.5",
-    "jsr:@workingdevshero/deno-imap@1": "1.0.0"
+    "jsr:@workingdevshero/deno-imap@1": "1.0.0",
+    "npm:rxjs@8.0.0-alpha.14": "8.0.0-alpha.14"
   },
   "jsr": {
     "@std/assert@1.0.11": {
@@ -17,6 +18,11 @@
     },
     "@workingdevshero/deno-imap@1.0.0": {
       "integrity": "b70048842a3089d92705e9d7d57298581ff74a23729dce07bd44ce85c79cc6d0"
+    }
+  },
+  "npm": {
+    "rxjs@8.0.0-alpha.14": {
+      "integrity": "sha512-oRCzFwbAMbo0+dVUeGUCCEf339mW7CESFvVDG3RTncD6yMtV2XoubFMpKEhBd2a9d04EpHl8QSz84/V/agG6bw=="
     }
   },
   "workspace": {

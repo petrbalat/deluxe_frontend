@@ -3,8 +3,8 @@
   "version": "0.10.5",
   "exports": "./mod.ts",
   "tasks": {
-    "check": "deno check mod.ts",
-    "check-full": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "check": "deno --unstable-tsgo check mod.ts",
+    "check-full": "deno fmt --check && deno lint && deno --unstable-tsgo check **/*.ts && deno --unstable-tsgo check **/*.tsx",
     "test": "deno test -A --no-check tests/**/*.ts",
     "publish": "deno task check && deno task test && deno publish"
   },
