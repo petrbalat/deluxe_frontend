@@ -1,6 +1,6 @@
 {
   "name": "@softdeluxe/deluxe-frontend",
-  "version": "0.10.7",
+  "version": "0.10.8",
   "exports": "./mod.ts",
   "tasks": {
     "check": "deno check --unstable-tsgo  mod.ts",

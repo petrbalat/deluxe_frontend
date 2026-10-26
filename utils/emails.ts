@@ -40,8 +40,9 @@ export async function* downloadUnreadEmails(imapConnection: ImapOptions, options
         try {
           content = atob(content);
         } catch (e) {
-          console.error(`atob error ${message.envelope?.subject} on date ${message.internalDate}`, e);
-          throw e;
+          // obsah není base64 (např. odpověď Re:) – email přeskočit, jinak by se zablokovalo zpracování i označení přečtených
+          console.error(`atob error ${message.envelope?.subject} on date ${message.internalDate}, email skipped`, e);
+          continue;
         }
       }
 
