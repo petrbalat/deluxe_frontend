@@ -4,7 +4,7 @@
   "exports": "./mod.ts",
   "tasks": {
     "check": "deno check --unstable-tsgo  mod.ts",
-    "check-full": "deno fmt --check && deno lint && deno check --unstable-tsgo **/*.ts && deno check--unstable-tsgo  **/*.tsx",
+    "check-full": "deno fmt --check && deno lint && deno check --unstable-tsgo **/*.ts && deno check --unstable-tsgo **/*.tsx",
     "test": "deno test -A --no-check tests/**/*.ts",
     "publish": "deno task check && deno task test && deno publish"
   },
